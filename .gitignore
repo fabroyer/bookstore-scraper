@@ -1,5 +1,5 @@
-venv/*
+venv/
 env/
-*.csv
-*.jpg
-.idea
+Images/
+Fichier_CSV/
+.idea/

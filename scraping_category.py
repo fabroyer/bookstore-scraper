@@ -4,6 +4,9 @@ import os
 import csv
 from scraping import scraping_one_product
 
+PROJECT_DIR = os.getcwd()
+
+os.makedirs("Fichier_CSV", exist_ok=True)
 
 #Fonction recréant l'url de chaque produit de la page à partir d'un url relatif
 def book_url(relative_link):
@@ -13,7 +16,7 @@ def book_url(relative_link):
 
 #Fonction intégrant dans un fichier csv les données recueillies
 def create_csv(category, list_product_page):
-    os.chdir('C:/Users/PycharmProjects/pythonProject/Fichier_CSV')
+    os.chdir(os.path.join(PROJECT_DIR, "Fichier_CSV"))
     with open(category + '.csv', 'w', encoding='utf-8') as f:
         writer = csv.DictWriter(f, delimiter=',', fieldnames=['product_page_url', 'universal_product_code',
                                                'title', 'prices_including_taxes',
@@ -65,4 +68,3 @@ def scraping_all_category(url):
                 print('La requête n a pas abouti.')
     else:
         print('La requête n a pas abouti.')
-

@@ -3,10 +3,9 @@ import requests
 import os
 import urllib.request
 
+PROJECT_DIR = os.getcwd()
 
-os.mkdir('C:/Users/PycharmProjects/pythonProject/Images')
-os.mkdir('C:/Users/PycharmProjects/pythonProject/Fichier_CSV')
-
+os.makedirs("Images", exist_ok=True)
 
 #Fonction reconstituant l'url de l'image à partir d'une url relative
 def image_url(image_url_relative):
@@ -15,7 +14,7 @@ def image_url(image_url_relative):
 
 
 #Fonction corrigeant l'écriture des titres des produits
-def replaceMultiple(incorrect_title, toBeReplaces, newString):
+def replace_multiple(incorrect_title, toBeReplaces, newString):
     for element in toBeReplaces:
         if element in incorrect_title:
             incorrect_title = incorrect_title.replace(element, newString)
@@ -24,8 +23,9 @@ def replaceMultiple(incorrect_title, toBeReplaces, newString):
 
 #Fonction téléchargeant l'image de chaque produit au sein d'une dossier
 def download_image(image_url, title):
-    os.chdir('C:/Users/PycharmProjects/pythonProject/Images')
-    f = open(title + ".jpg", 'wb')
+    os.chdir(os.path.join(PROJECT_DIR, "Images"))
+    safe_title = title[:100]
+    f = open(safe_title + ".jpg", "wb")
     f.write(urllib.request.urlopen(image_url).read())
     f.close()
 
@@ -41,11 +41,11 @@ def scraping_one_product(url):
         product_page_url = url
         universal_product_code = td[0].text
         incorrect_title = soup.find("h1").text
-        title = replaceMultiple(incorrect_title, [':', '/', ';', '*', '"','>', '?'], '')
+        title = replace_multiple(incorrect_title, [':', '/', ';', '*', '"','>', '?'], '')
         prices_including_taxes = td[3].text
         prices_excluding_taxes = td[2].text
         number = td[5].text
-        number_available = replaceMultiple(number, ['In stock (', 'available)'], '')
+        number_available = replace_multiple(number, ['In stock (', 'available)'], '')
         conteneur_p = soup.find("article", class_='product_page')
         p_description = conteneur_p.find_all("p")
         product_description = p_description[3].text
