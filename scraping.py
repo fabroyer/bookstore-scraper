@@ -7,13 +7,14 @@ PROJECT_DIR = os.getcwd()
 
 os.makedirs("Images", exist_ok=True)
 
-#Fonction reconstituant l'url de l'image à partir d'une url relative
+
+# Builds the image URL from a relative path
 def image_url(image_url_relative):
     image_url_base = 'http://books.toscrape.com/'
     return image_url_base + image_url_relative.replace('../', '')
 
 
-#Fonction corrigeant l'écriture des titres des produits
+# Cleans product titles for file naming
 def replace_multiple(incorrect_title, toBeReplaces, newString):
     for element in toBeReplaces:
         if element in incorrect_title:
@@ -21,7 +22,7 @@ def replace_multiple(incorrect_title, toBeReplaces, newString):
     return incorrect_title
 
 
-#Fonction téléchargeant l'image de chaque produit au sein d'une dossier
+# Downloads each product image to the Images directory
 def download_image(image_url, title):
     os.chdir(os.path.join(PROJECT_DIR, "Images"))
     safe_title = title[:100]
@@ -30,7 +31,7 @@ def download_image(image_url, title):
     f.close()
 
 
-#Fonction extrayant les informations d'une page produit avec BeautifulSoup, regroupées dans un dictionnaire
+# Extracts product information from a product page and stores it in a dictionary
 def scraping_one_product(url):
     response = requests.get(url)
 

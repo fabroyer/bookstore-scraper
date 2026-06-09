@@ -8,13 +8,14 @@ PROJECT_DIR = os.getcwd()
 
 os.makedirs("Fichier_CSV", exist_ok=True)
 
-#Fonction recréant l'url de chaque produit de la page à partir d'un url relatif
+
+# Builds the URL of each product from a relative URL
 def book_url(relative_link):
     base_url = 'http://books.toscrape.com/catalogue/'
     return base_url + relative_link.replace('../', '')
 
 
-#Fonction intégrant dans un fichier csv les données recueillies
+# Writes the collected data to a CSV file
 def create_csv(category, list_product_page):
     os.chdir(os.path.join(PROJECT_DIR, "Fichier_CSV"))
     with open(category + '.csv', 'w', encoding='utf-8') as f:
@@ -28,7 +29,7 @@ def create_csv(category, list_product_page):
             writer.writerow(element)
 
 
-#Fonction étendant le scraping des informations des produits à toutes les pages de la catégorie
+# Extracts product information from every page in a category
 def scraping_all_category(url):
     response = requests.get(url)
     list_product_category = []

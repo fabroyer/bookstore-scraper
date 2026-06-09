@@ -6,13 +6,13 @@ from scraping_category import scraping_all_category
 url = 'http://books.toscrape.com/catalogue/category/books_1/index.html'
 
 
-#Fonction recréant l'url de chaque catégorie à partir d'une url_relative
+# Converts a relative category URL into a full URL
 def category_url(url_relative):
     base_url_category = 'http://books.toscrape.com/catalogue/category/'
     return base_url_category + url_relative.replace('../', '')
 
 
-#Fonction étendant le scraping des informations à toutes les catégories du site
+# Scrapes data from all categories on the website
 def scraping_website(url):
     response = requests.get(url)
     if response.ok:
